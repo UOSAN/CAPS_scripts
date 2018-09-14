@@ -1,11 +1,11 @@
-DIR.bx = '~/Desktop/PROP_BxData/';
+studyCode = 'CAPS';
+taskCode = 'ALERT';
+DIR.bx = ['~/Desktop/' studyCode '_BxData/pilot/tasks/' taskCode];
 DIR.out = [DIR.bx filesep 'output'];
 DIR.outRecovered = [DIR.bx filesep 'output_recoveredResp'];
 
-subList = [1:9 13];
+subList = [203 219];
 nRuns = 2;
-studyCode = 'PROP';
-taskCode = 'PROP';
 masterMat = [];
 filenames.respCheck = [DIR.bx filesep 'compiled' filesep 'responseComparison'];
 nFoundResponses = [];
@@ -33,10 +33,7 @@ for s = subList
             % import output file to determine actual onsets/duration
             load(filenames.out)
             
-            relIdx = cell2mat(cellfun(@(x) strcmp(x,'relevance'),run_info.tag,'UniformOutput',false));
-            likeIdx = cell2mat(cellfun(@(x) strcmp(x,'liking'),run_info.tag,'UniformOutput',false));
-            helpIdx = cell2mat(cellfun(@(x) strcmp(x,'helpfulness'),run_info.tag,'UniformOutput',false));
-            ratingIdx = relIdx | likeIdx | helpIdx;
+            isRating_RI = cell2mat(cellfun(@(x) strcmp(x,'distress'),run_info.tag,'UniformOutput',false));
             
             keypressTimeTemp = key_presses.time;
             for i=2:length(key_presses.time)
@@ -50,15 +47,15 @@ for s = subList
             % logged within run_info.responses
             
             keypressesLogged = sum(key_presses.time>0);
-            responsesWithinRunInfo = length(run_info.responses)-sum(cellfun('isempty',run_info.responses));           
+            responsesWithinRunInfo = sum(isRating_RI)-sum(cellfun('isempty',run_info.responses(isRating_RI)));           
             masterMat(end+1,:) = [s r keypressesLogged responsesWithinRunInfo keypressesLogged-responsesWithinRunInfo];
             
             % Create Time Log of Ratings, Keypresses, and post-rating Fixations
             % Rating = 1; Fixation = 0; Keypresses = 2
             
             keyLog = key_presses.time(key_presses.time>0)';
-            rateLog = run_info.onsets(ratingIdx)';
-            fixLog = run_info.onsets(logical([0;ratingIdx(1:end-1)]))'; % fixations that mark the end of rating
+            rateLog = run_info.onsets(isRating_RI)';
+            fixLog = run_info.onsets(logical([0;isRating_RI(1:end-1)]))'; % fixations that mark the end of rating
             
             fullLog = [[ones(length(rateLog),1) rateLog]; [2*ones(length(keyLog),1) keyLog]; [zeros(length(fixLog),1) fixLog]];
             fullLog = sortrows(fullLog,2);

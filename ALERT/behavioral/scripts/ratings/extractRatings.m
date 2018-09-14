@@ -1,21 +1,23 @@
-DIR.bx = '~/Desktop/PROP_BxData/';
+studyCode = 'CAPS';
+taskCode = 'ALERT';
+DIR.bx = ['~/Desktop/' studyCode '_BxData/pilot/tasks/' taskCode];
 DIR.out = [DIR.bx filesep 'output_recoveredResp'];
 DIR.rating = [DIR.bx filesep 'ratings'];
 DIR.in = [DIR.bx filesep 'input'];
 DIR.vec = [DIR.bx filesep 'vecs'];
-DIR.thisFunk = '~/Desktop/PROP_scripts/behavioral/scripts/makeVecs/';
+DIR.thisFunk = ['~/Desktop/' studyCode '_scripts/behavioral/scripts/makeVecs/'];
 DIR.compiled = [DIR.bx filesep 'compiled'];
 
-subList = [1:9 13];
+subList = [203 219];
 nRuns = 2;
-studyCode = 'PROP';
-taskCode = 'PROP';
-masterRatingMat = nan(max(subList),6);
+nConds = 6;
+ratingMeans = nan(max(subList),7);
+filenames.template = '/Users/laurenkahn/Desktop/CAPS_BxData/pilot/tasks/ALERT/output/sub-203_ses-1_task-ALERT_run-1_beh.mat';
 
 for s = subList
-    currentSubCBT = [];        
-    currentSubPST = [];
-            
+    currentSubRatings = [];
+    ratings = cell(nRuns,nConds);
+    
     if s<10
         placeholder = '00';
     elseif s<100
@@ -24,11 +26,11 @@ for s = subList
         placeholder = '';
     end
     subjectCode = [studyCode placeholder num2str(s)];
+    filenames.rating =  [DIR.rating filesep subjectCode '_ratings'];
     
     for r=1:nRuns
         
         filenames.out =  [DIR.out filesep 'sub-' subjectCode(end-2:end) '_ses-1_task-' taskCode '_run-' num2str(r) '_beh.mat'];
-        filenames.rating =  [DIR.rating filesep subjectCode '_run' num2str(r) '_ratings'];
         
         if ~exist(filenames.out,'file')
             warning('No output file found for subject %d, run %d.\n',s,r);% import input file to determine eventIndices DO THIS
@@ -36,68 +38,52 @@ for s = subList
             
             % import output file to determine actual onsets/duration
             load(filenames.out)
-             
+            
             % Get event indices
-            cbtIdx = cell2mat(cellfun(@(x) strcmp(x(1:3),'cbt'),run_info.tag,'UniformOutput',false));
-            pstIdx = cell2mat(cellfun(@(x) strcmp(x(1:3),'pst'),run_info.tag,'UniformOutput',false));
-            relIdx = cell2mat(cellfun(@(x) strcmp(x,'relevance'),run_info.tag,'UniformOutput',false));
-            likeIdx = cell2mat(cellfun(@(x) strcmp(x,'liking'),run_info.tag,'UniformOutput',false));
-            helpIdx = cell2mat(cellfun(@(x) strcmp(x,'helpfulness'),run_info.tag,'UniformOutput',false));
-            ratingIdx = relIdx | likeIdx | helpIdx;
-            
-            sixAfterCBT = [0; 0; 0; 0; 0; 0; cbtIdx(1:end-6)];
-            sixAfterPST = [0; 0; 0; 0; 0; 0; pstIdx(1:end-6)];
-           
-            cbtRelIdx = sixAfterCBT & relIdx;
-            cbtLikeIdx = sixAfterCBT & likeIdx;
-            cbtHelpIdx = sixAfterCBT & helpIdx;
-            
-            pstRelIdx = sixAfterPST & relIdx;
-            pstLikeIdx = sixAfterPST & likeIdx;
-            pstHelpIdx = sixAfterPST & helpIdx;
-            
+            isER = cell2mat(cellfun(@(x) strcmp(x(1:2),'ER'),run_info.tag,'UniformOutput',false));
+            isAL = cell2mat(cellfun(@(x) strcmp(x(1:2),'AL'),run_info.tag,'UniformOutput',false));
+            isJL = cell2mat(cellfun(@(x) strcmp(x(1:2),'JL'),run_info.tag,'UniformOutput',false));
+            isNeut = cell2mat(cellfun(@(x) strcmp(x(end-3:end),'tral'),run_info.tag,'UniformOutput',false));
+            isNeg = cell2mat(cellfun(@(x) strcmp(x(end-2:end),'neg'),run_info.tag,'UniformOutput',false));
+            isRating = cell2mat(cellfun(@(x) strcmp(x,'distress'),run_info.tag,'UniformOutput',false));
+
             % Extract responses
-            responses = run_info.responses(ratingIdx);
-            for resp = find(ratingIdx)'
+            for resp = find(isRating)'
                 if isempty(run_info.responses{resp})
                     run_info.responses{resp} = NaN;
                     warning('missing response for run %d, event %d', r, resp)
                 else
-                   run_info.responses{resp} = str2num(run_info.responses{resp});
+                    run_info.responses{resp} = str2num(run_info.responses{resp});
                 end
             end
             
-            cbtRatings = cell2mat([run_info.responses(cbtRelIdx)' run_info.responses(cbtHelpIdx)' run_info.responses(cbtLikeIdx)']);
-            pstRatings = cell2mat([run_info.responses(pstRelIdx)' run_info.responses(pstHelpIdx)' run_info.responses(pstLikeIdx)']);
-            cbtRatings = cbtRatings-4;
-            pstRatings = pstRatings-4;
-            
-            nRatings(1) = size(cbtRatings,1);
-            nRatings(2) = size(pstRatings,1);
-            ratings = [[ones(nRatings(1),1); 2*ones(nRatings(2),1)] [cbtRatings; pstRatings]];
-            
-            save(filenames.rating,'cbtRatings','pstRatings')
-            fid = fopen([filenames.rating '.txt'],'w');
-            fprintf(fid,'%s\t%s\t%s\t%s\n','therapy','relevance','helpfulness','liking');
-            for l=1:size(ratings,1)
-                fprintf(fid,'%d\t%d\t%d\t%d\n', ratings(l,1),ratings(l,2),ratings(l,3),ratings(l,4));
-            end
-            fclose(fid);
-            
-            currentSubCBT = [currentSubCBT; cbtRatings];
-            currentSubPST = [currentSubPST; pstRatings];
-        
+            ratings{r,1} = cell2mat(run_info.responses(logical([0;0;(isER & isNeg)])))';
+            ratings{r,2} = cell2mat(run_info.responses(logical([0;0;(isER & isNeut)])))';
+            ratings{r,3} = cell2mat(run_info.responses(logical([0;0;(isAL & isNeg)])))';
+            ratings{r,4} = cell2mat(run_info.responses(logical([0;0;(isAL & isNeut)])))';
+            ratings{r,5} = cell2mat(run_info.responses(logical([0;0;(isJL & isNeg)])))';
+            ratings{r,6} = cell2mat(run_info.responses(logical([0;0;(isJL & isNeut)])))';
         end
     end
     
-    cbtMeans = nanmean(currentSubCBT);
-    pstMeans = nanmean(currentSubPST);
-    overallMeans = nanmean([currentSubCBT;currentSubPST]);
+    save(filenames.rating,'ratings')
     
-    ratingMeans(s,1:3) = cbtMeans;
-    ratingMeans(s,4:6) = pstMeans;
-    ratingMeans(s,7:9) = overallMeans;
-            
+    ratingLog = [];
+    for cond=1:nConds
+        condRatings = [];
+        for r=1:nRuns
+            condRatings = [condRatings; ratings{r,cond}];
+            nRatings(cond) = size(ratings{r,cond},1);
+            ratingLog = [ratingLog;[cond*ones(nRatings(cond),1) ratings{r,cond}]];
+        end
+        condMeans(cond) = nanmean(condRatings);
+    end
+    
+    overallMeans = nanmean(ratingLog(:,2));
+    
+    ratingMeans(s,1:6) = condMeans;
+    ratingMeans(s,7) = overallMeans;
+    
 end
 
 dlmwrite([DIR.compiled filesep 'ratingMeans.txt'],ratingMeans,'delimiter','\t')

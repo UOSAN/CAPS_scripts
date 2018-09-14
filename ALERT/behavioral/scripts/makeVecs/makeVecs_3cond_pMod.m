@@ -1,14 +1,16 @@
 studyCode = 'CAPS';
 taskCode = 'ALERT';
 DIR.bx = ['~/Desktop/' studyCode '_BxData/pilot/tasks/' taskCode];
-DIR.out = [DIR.bx filesep 'output'];
+DIR.out = [DIR.bx filesep 'output_recoveredResp'];
 DIR.in = [DIR.bx filesep 'input'];
 DIR.vec = [DIR.bx filesep 'vecs'];
 DIR.thisFunk = ['~/Desktop/' studyCode '_scripts/' taskCode '/behavioral/scripts/makeVecs/'];
+DIR.rating = [DIR.bx filesep 'ratings'];
+DIR.compiled = [DIR.bx filesep 'compiled'];
 
 subList = [203 219];
 nRuns = 2;
-modelCode = '3cond';
+modelCode = '3cond_pmod';
 % Saving SPM-ready names, onsets, and durations to .mat
 
 DIR.vecModel = [DIR.vec filesep modelCode];
@@ -16,17 +18,12 @@ if ~exist(DIR.vecModel)
     mkdir(DIR.vecModel)
 end
 
+filenames.ratingMeans = 'ratingMeans.mat';
+
 names = {'ERNeg','ERNeutral','ALNeg','ALNeutral','JLNeg','JLNeutral','instruction','rating'};
 nConds = length(names);
-
-% Get event indices
-isER = cell2mat(cellfun(@(x) strcmp(x(1:2),'ER'),run_info.tag,'UniformOutput',false));
-isAL = cell2mat(cellfun(@(x) strcmp(x(1:2),'AL'),run_info.tag,'UniformOutput',false));
-isJL = cell2mat(cellfun(@(x) strcmp(x(1:2),'JL'),run_info.tag,'UniformOutput',false));
-isNeut = cell2mat(cellfun(@(x) strcmp(x(end-3:end),'tral'),run_info.tag,'UniformOutput',false));
-isNeg = cell2mat(cellfun(@(x) strcmp(x(end-2:end),'neg'),run_info.tag,'UniformOutput',false));
-isRating = cell2mat(cellfun(@(x) strcmp(x,'distress'),run_info.tag,'UniformOutput',false));
-isInstrux = cell2mat(cellfun(@(x) strcmp(x(end-4:end),'truct'),run_info.tag,'UniformOutput',false));
+pmodConds = [1:6];
+load([DIR.compiled filesep filenames.ratingMeans])
 
 for s = subList
     
@@ -37,14 +34,21 @@ for s = subList
     else
         placeholder = '';
     end
-    subjectCode = [studyCode placeholder num2str(s)];
-    
+    subjectCode = [studyCode placeholder num2str(s)];            
+    filenames.rating =  [DIR.rating filesep subjectCode '_ratings'];
+    load(filenames.rating);
+                
     for r=1:nRuns
         
         filenames.out =  [DIR.out filesep 'sub-' subjectCode(end-2:end) '_ses-1_task-' taskCode '_run-' num2str(r) '_beh.mat'];
         filenames.vec = [DIR.vecModel filesep subjectCode '_run' num2str(r) '_' modelCode];
         onsets = cell(1,nConds);
         durations = cell(1,nConds);
+        pmod = struct;
+        for cond = pmodConds
+            pmod(cond).name = 'distress';
+            pmod(cond).poly = 1;
+        end
         
         if ~exist(filenames.out,'file')
             warning('No output file found for subject %d, run %d.\n',s,r);% import input file to determine eventIndices DO THIS
@@ -61,7 +65,7 @@ for s = subList
             isNeg = cell2mat(cellfun(@(x) strcmp(x(end-2:end),'neg'),run_info.tag,'UniformOutput',false));
             isRating = cell2mat(cellfun(@(x) strcmp(x,'distress'),run_info.tag,'UniformOutput',false));
             isInstrux = cell2mat(cellfun(@(x) strcmp(x(end-4:end),'truct'),run_info.tag,'UniformOutput',false));
-            
+
             onsets{1} = run_info.onsets(isER & isNeg);
             onsets{2} = run_info.onsets(isER & isNeut);
             onsets{3} = run_info.onsets(isAL & isNeg);
@@ -80,11 +84,19 @@ for s = subList
             durations{7} = run_info.durations(isInstrux);
             durations{8} = run_info.durations(isRating);
             
+            subRatingMean = ratingMeans(s,7);
+            
+            for cond = pmodConds % for each condition
+                % Set up pmod for current cond
+                pmod_temp = ratings{r,cond} - subRatingMean;
+                pmod_temp(isnan(pmod_temp)) = 0; % Make NaNs = 0 (mean)
+                pmod(cond).param = pmod_temp;
+            end
+            
             % save vec file for this run
-            save(filenames.vec,'names','onsets','durations')
+            save(filenames.vec,'names','onsets','durations','pmod')
         end
     end
     
 end
-
 cd(DIR.thisFunk)
