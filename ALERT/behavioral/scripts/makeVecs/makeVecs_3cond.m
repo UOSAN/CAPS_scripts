@@ -6,10 +6,15 @@ DIR.in = [DIR.bx filesep 'input'];
 DIR.vec = [DIR.bx filesep 'vecs'];
 DIR.thisFunk = ['~/Desktop/' studyCode '_scripts/' taskCode '/behavioral/scripts/makeVecs/'];
 
-subList = [203 219];
+subList = [108 201 203 219];
+nSubs = length(subList);
 nRuns = 2;
 modelCode = '3cond';
 % Saving SPM-ready names, onsets, and durations to .mat
+DIR.compiled = [DIR.bx filesep 'compiled' filesep 'n' num2str(nSubs) filesep];
+if ~exist(DIR.compiled)
+    mkdir(DIR.compiled)
+end
 
 DIR.vecModel = [DIR.vec filesep modelCode];
 if ~exist(DIR.vecModel)
@@ -18,15 +23,6 @@ end
 
 names = {'ERNeg','ERNeutral','ALNeg','ALNeutral','JLNeg','JLNeutral','instruction','rating'};
 nConds = length(names);
-
-% Get event indices
-isER = cell2mat(cellfun(@(x) strcmp(x(1:2),'ER'),run_info.tag,'UniformOutput',false));
-isAL = cell2mat(cellfun(@(x) strcmp(x(1:2),'AL'),run_info.tag,'UniformOutput',false));
-isJL = cell2mat(cellfun(@(x) strcmp(x(1:2),'JL'),run_info.tag,'UniformOutput',false));
-isNeut = cell2mat(cellfun(@(x) strcmp(x(end-3:end),'tral'),run_info.tag,'UniformOutput',false));
-isNeg = cell2mat(cellfun(@(x) strcmp(x(end-2:end),'neg'),run_info.tag,'UniformOutput',false));
-isRating = cell2mat(cellfun(@(x) strcmp(x,'distress'),run_info.tag,'UniformOutput',false));
-isInstrux = cell2mat(cellfun(@(x) strcmp(x(end-4:end),'truct'),run_info.tag,'UniformOutput',false));
 
 for s = subList
     

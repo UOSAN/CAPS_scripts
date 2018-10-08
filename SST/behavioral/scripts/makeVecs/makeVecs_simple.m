@@ -9,7 +9,7 @@ DIR.out = [DIR.bx  'output/'];
 DIR.compiled = [DIR.bx filesep 'compiled/'];
 DIR.vec = [DIR.bx filesep 'vecs/'];
 
-subList = [203 219];
+subList = [201 203 219];
 runList = [1 2];
 nRuns = length(runList);
 nSubs = length(subList);

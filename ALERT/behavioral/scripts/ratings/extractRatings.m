@@ -6,13 +6,16 @@ DIR.rating = [DIR.bx filesep 'ratings'];
 DIR.in = [DIR.bx filesep 'input'];
 DIR.vec = [DIR.bx filesep 'vecs'];
 DIR.thisFunk = ['~/Desktop/' studyCode '_scripts/behavioral/scripts/makeVecs/'];
-DIR.compiled = [DIR.bx filesep 'compiled'];
 
-subList = [203 219];
+subList = [108 201 203 219];
+nSubs = length(subList);
 nRuns = 2;
 nConds = 6;
 ratingMeans = nan(max(subList),7);
-filenames.template = '/Users/laurenkahn/Desktop/CAPS_BxData/pilot/tasks/ALERT/output/sub-203_ses-1_task-ALERT_run-1_beh.mat';
+DIR.compiled = [DIR.bx filesep 'compiled' filesep 'n' num2str(nSubs) filesep];
+if ~exist(DIR.compiled)
+    mkdir(DIR.compiled)
+end
 
 for s = subList
     currentSubRatings = [];

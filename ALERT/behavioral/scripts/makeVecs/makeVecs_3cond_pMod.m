@@ -6,9 +6,9 @@ DIR.in = [DIR.bx filesep 'input'];
 DIR.vec = [DIR.bx filesep 'vecs'];
 DIR.thisFunk = ['~/Desktop/' studyCode '_scripts/' taskCode '/behavioral/scripts/makeVecs/'];
 DIR.rating = [DIR.bx filesep 'ratings'];
-DIR.compiled = [DIR.bx filesep 'compiled'];
 
-subList = [203 219];
+subList = [108 201 203 219];
+nSubs = length(subList);
 nRuns = 2;
 modelCode = '3cond_pmod';
 % Saving SPM-ready names, onsets, and durations to .mat
@@ -16,6 +16,11 @@ modelCode = '3cond_pmod';
 DIR.vecModel = [DIR.vec filesep modelCode];
 if ~exist(DIR.vecModel)
     mkdir(DIR.vecModel)
+end
+
+DIR.compiled = [DIR.bx filesep 'compiled' filesep 'n' num2str(nSubs) filesep];
+if ~exist(DIR.compiled)
+    mkdir(DIR.compiled)
 end
 
 filenames.ratingMeans = 'ratingMeans.mat';

@@ -42,7 +42,7 @@ leftButton=91;
 rightButton=94;
 
 % Change these
-subList = [203 219];
+subList = [201 203 219]; % 108's didn't get saved?
 runList = [1 2];
 nRuns = length(runList);
 nSubs = length(subList);

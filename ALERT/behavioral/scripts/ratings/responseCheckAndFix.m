@@ -4,11 +4,16 @@ DIR.bx = ['~/Desktop/' studyCode '_BxData/pilot/tasks/' taskCode];
 DIR.out = [DIR.bx filesep 'output'];
 DIR.outRecovered = [DIR.bx filesep 'output_recoveredResp'];
 
-subList = [203 219];
+subList = [108 201 203 219];
+nSubs = length(subList);
 nRuns = 2;
 masterMat = [];
-filenames.respCheck = [DIR.bx filesep 'compiled' filesep 'responseComparison'];
+filenames.respCheck = [DIR.compiled 'responseComparison'];
 nFoundResponses = [];
+DIR.compiled = [DIR.bx filesep 'compiled' filesep 'n' num2str(nSubs) filesep];
+if ~exist(DIR.compiled)
+    mkdir(DIR.compiled)
+end
 
 for s = subList
     
