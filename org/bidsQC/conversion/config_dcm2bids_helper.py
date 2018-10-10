@@ -35,7 +35,7 @@ errorlog = os.path.join(logdir, 'errorlog_helper' + datetime.now().strftime('%Y%
 test_subject = 'CAPS108_20180927_151529' # Name of a directory that contains DICOMS for one participant
 
 # Run on local machine (run_local = True) or high performance cluster with slurm (run_local = False)
-run_local = True
+run_local = False
 
 # If false, set the singularity image. Else, set to 'NA'
 singularity_image =  os.path.join(os.sep, 'projects', group, 'shared', 'containers', 'Dcm2Bids-master.simg')
