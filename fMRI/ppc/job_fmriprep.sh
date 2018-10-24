@@ -31,7 +31,7 @@ for task in ${tasks[@]}; do
 echo -e "\nStarting on: $task"
 echo -e "\n"
 
-PYTHONPATH="" singularity run --bind "${group_dir}":"${group_dir}" $image $bids_dir $derivatives participant --participant_label $subid -t $task -w /tmp --output-space {template,T1w,fsnative} --nthreads 1 --mem-mb 100000 --fs-license-file /projects/sanlab/shared/REV/REV_scripts/fMRI/license.txt
+PYTHONPATH="" singularity run --bind "${group_dir}":"${group_dir}" $image $bids_dir $derivatives participant --participant_label $subid -t $task -w /tmp --output-space {template,T1w,fsnative} --nthreads 1 --mem-mb 100000 --fs-license-file $freesurferlicense
 
 
 echo -e "\n"

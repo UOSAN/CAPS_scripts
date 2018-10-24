@@ -7,8 +7,9 @@
 # Set your directories
 
 container=containers/fmriprep-latest-2018-09-05.simg
+freesurferlicense=/projects/sanlab/shared/containers/license.txt
 group_dir=/projects/sanlab/shared/ #set path to directory within which study folder lives
-study="CAPS" 
+study=CAPS
 study_dir="${group_dir}""${study}"
 output_dir="${study_dir}"/"${study}"_scripts/fMRI/ppc/output
 
@@ -26,6 +27,14 @@ for subject in $subject_list; do
 subid=`echo $subject|awk '{print $1}' FS=","`
 sessid=`echo $subject|awk '{print $2}' FS=","`
   
-sbatch --export subid=${subid},sessid=${sessid},group_dir=${group_dir},study_dir=${study_dir},study=${study},container=${container} --job-name fmriprep --partition=short --cpus-per-task=28 --mem=75G --time=20:00:00 -o "${output_dir}"/"${subid}"_"${sessid}"_fmriprep_output.txt -e "${output_dir}"/"${subid}"_"${sessid}"_fmriprep_error.txt job_fmriprep.sh
+sbatch --export subid=${subid},sessid=${sessid},group_dir=${group_dir},study_dir=${study_dir},study=${study},container=${container},freesurferlicense=${freesurferlicense} \
+	--job-name fmriprep \
+	--partition=short \
+	--cpus-per-task=28 \
+	--mem=75G \
+	--time=20:00:00 \
+	-o "${output_dir}"/"${subid}"_"${sessid}"_fmriprep_output.txt \
+	-e "${output_dir}"/"${subid}"_"${sessid}"_fmriprep_error.txt \
+	job_fmriprep.sh
 	
 done
