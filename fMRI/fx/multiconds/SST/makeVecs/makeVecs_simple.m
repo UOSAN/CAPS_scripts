@@ -4,7 +4,7 @@ studyCode = 'CAPS';
 taskCode = 'SST';
 modelCode = 'simple';
 
-DIR.bx = ['~/Desktop' filesep studyCode '_BxData' filesep 'pilot' filesep 'tasks' filesep taskCode filesep];
+DIR.bx = ['~/Documents/code/sanlab' filesep studyCode '_BxData' filesep 'pilot' filesep 'tasks' filesep taskCode filesep];
 DIR.out = [DIR.bx  'output/'];
 DIR.compiled = [DIR.bx filesep 'compiled/'];
 DIR.vec = [DIR.bx filesep 'vecs/'];
@@ -148,16 +148,16 @@ for s=subList
             onsets{3} = trialTime(isFailedStop)+cueLength(isFailedStop);
             onsets{4} = trialTime(isCorrectGo|isCorrectStop|isFailedStop|isIncorrectGo);
             
-            durations{1} = arrowLength;
-            durations{2} = arrowLength;
-            durations{3} = arrowLength;
+            durations{1} = repelem(arrowLength, length(onsets{1}))';
+            durations{2} = repelem(arrowLength, length(onsets{2}))';
+            durations{3} = repelem(arrowLength, length(onsets{3}))';
             durations{4} = cueLength(isCorrectGo|isCorrectStop|isFailedStop|isIncorrectGo);
             
             % Trash?
             if find(isIncorrectGo) % If there's trash, trash it
                 names{5} = 'Trash';
                 onsets{5} = trialTime(isIncorrectGo)+cueLength(isIncorrectGo);
-                durations{5} = arrowLength;
+                durations{5} = repelem(arrowLength, length(onsets{5}))';
                 trashCount(s,r)=sum(isIncorrectGo);
             end
             
