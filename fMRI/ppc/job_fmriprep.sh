@@ -15,8 +15,7 @@ echo -e "\nContainer: $image"
 echo -e "\nSubject directory: $bids_dir"
 
 # Source task list
-#tasks=`cat tasks.txt` 
-tasks=(SST1 SST2 ALERT1 ALERT2)
+tasks=`cat tasks.txt` 
 
 # Load packages
 module load singularity
