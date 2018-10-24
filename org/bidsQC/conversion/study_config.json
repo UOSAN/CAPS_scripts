@@ -10,7 +10,7 @@
         {
             "dataType": "func",
             "modalityLabel": "bold",
-            "customLabels": "task-SST1",
+            "customLabels": "task-SST_acq-01",
             "criteria": {
                 "SeriesDescription": "SST1"
             }
@@ -18,7 +18,7 @@
         {
             "dataType": "func",
             "modalityLabel": "bold",
-            "customLabels": "task-SST2",
+            "customLabels": "task-SST_acq-02",
             "criteria": {
                 "SeriesDescription": "SST2"
             }
@@ -26,7 +26,7 @@
         {
             "dataType": "func",
             "modalityLabel": "bold",
-            "customLabels": "task-ALERT1",
+            "customLabels": "task-ALERT_acq-01",
             "criteria": {
                 "SeriesDescription": "ALERT1"
             }
@@ -34,7 +34,7 @@
         {
             "dataType": "func",
             "modalityLabel": "bold",
-            "customLabels": "task-ALERT2",
+            "customLabels": "task-ALERT_acq-02",
             "criteria": {
                 "SeriesDescription": "ALERT2"
             }
