@@ -18,7 +18,7 @@
 STUDY=/projects/sanlab/shared/CAPS/CAPS_scripts
 
 # Set subject list
-SUBJLIST=`cat subject_list_test.txt`
+SUBJLIST=`cat subject_list.txt`
 
 # Which SID should be replaced?
 REPLACESID='001'
@@ -54,7 +54,7 @@ if [ "${PROCESS}" == "slurm" ]; then
 	for SUB in $SUBJLIST
 	do
 	 echo "submitting via qsub"
-	 sbatch --export=REPLACESID=$REPLACESID,SCRIPT=$SCRIPT,SUB=$SUB,SPM_PATH=$SPM_PATH,PROCESS=$PROCESS  \
+	 sbatch --export ALL,REPLACESID=$REPLACESID,SCRIPT=$SCRIPT,SUB=$SUB,SPM_PATH=$SPM_PATH,PROCESS=$PROCESS  \
 		 --job-name=${RESULTS_INFIX} \
 		 -o "${OUTPUTDIR}"/"${SUB}"_${RESULTS_INFIX}.log \
 		 --cpus-per-task=${cpuspertask} \
