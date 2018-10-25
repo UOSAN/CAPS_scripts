@@ -1,0 +1,39 @@
+-------------------------------------------------------------------------------
+sub-108p
+Running /projects/sanlab/shared/CAPS/CAPS_scripts/fMRI/ppc/smooth/smooth.m
+-------------------------------------------------------------------------------
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017b (9.3.0.713579) 64-bit (glnxa64)
+                             September 14, 2017
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'File Selector (Batch Mode)'
+Done    'File Selector (Batch Mode)'
+Running 'File Selector (Batch Mode)'
+Done    'File Selector (Batch Mode)'
+Running 'Gunzip Files'
+Done    'Gunzip Files'
+Running 'Gunzip Files'
+Done    'Gunzip Files'
+Running 'Expand image frames'
+Done    'Expand image frames'
+Running 'Expand image frames'
+Done    'Expand image frames'
+Running 'Smooth'
+Done    'Smooth'
+Running 'Smooth'
+Done    'Smooth'
+Running 'Move/Delete Files'
+Done    'Move/Delete Files'
+Done
+
