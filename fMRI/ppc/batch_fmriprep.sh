@@ -27,7 +27,7 @@ for subject in $subject_list; do
 subid=`echo $subject|awk '{print $1}' FS=","`
 sessid=`echo $subject|awk '{print $2}' FS=","`
   
-sbatch --export subid=${subid},sessid=${sessid},group_dir=${group_dir},study_dir=${study_dir},study=${study},container=${container},freesurferlicense=${freesurferlicense} \
+sbatch --export ALL,subid=${subid},sessid=${sessid},group_dir=${group_dir},study_dir=${study_dir},study=${study},container=${container},freesurferlicense=${freesurferlicense} \
 	--job-name fmriprep \
 	--partition=short \
 	--cpus-per-task=28 \
