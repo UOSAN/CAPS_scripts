@@ -22,28 +22,22 @@ Done    'File Selector (Batch Mode)'
 Running 'File Selector (Batch Mode)'
 Done    'File Selector (Batch Mode)'
 Running 'Gunzip Files'
-Done    'Gunzip Files'
-Running 'Gunzip Files'
-Done    'Gunzip Files'
-Running 'Expand image frames'
-Done    'Expand image frames'
-Running 'Expand image frames'
-Done    'Expand image frames'
-Running 'Smooth'
-Done    'Smooth'
-Running 'Smooth'
-Failed  'Smooth'
-Error using spm_vol>spm_vol_hdr (line 80)
-File "/projects/sanlab/shared/CAPS/bids_data/derivatives/fmriprep/sub-108p/ses-1/func/sub-108p_ses-1_task-ALERT_acq-02_bold_space-MNI152NLin2009cAsym_preproc.nii" does not exist.
-In file "/projects/sanlab/shared/spm12/spm_vol.m" (v5958), function "spm_vol_hdr" at line 80.
-In file "/projects/sanlab/shared/spm12/spm_vol.m" (v5958), function "spm_vol" at line 61.
-In file "/projects/sanlab/shared/spm12/spm_smooth.m" (v4419), function "spm_smooth" at line 33.
-In file "/gpfs/projects/sanlab/shared/spm12/config/spm_run_smooth.m" (v3915), function "spm_run_smooth" at line 20.
+Failed  'Gunzip Files'
+Output argument "out" (and maybe others) not assigned during call to "cfg_run_gunzip_files".
 
-Running 'Move/Delete Files'
-Done    'Move/Delete Files'
+Running 'Gunzip Files'
+Failed  'Gunzip Files'
+Output argument "out" (and maybe others) not assigned during call to "cfg_run_gunzip_files".
+
+No executable modules, but still unresolved dependencies or incomplete module inputs.
 The following modules did not run:
-Failed: Smooth
+Failed: Gunzip Files
+Failed: Gunzip Files
+Skipped: Expand image frames
+Skipped: Expand image frames
+Skipped: Smooth
+Skipped: Smooth
+Skipped: Move/Delete Files
 
 {Error using MATLABbatch system
 Job execution failed. The full log of this run can be found in MATLAB command
@@ -53,3 +47,4 @@ displayed in this error message)
 Running job #1
 ------------------
 } 
+>> 

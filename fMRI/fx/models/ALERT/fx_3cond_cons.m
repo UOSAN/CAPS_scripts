@@ -1,10 +1,9 @@
 %-----------------------------------------------------------------------
-% Job saved on 19-Aug-2018 23:52:11 by cfg_util (rev $Rev: 6942 $)
-% spm SPM - SPM12 (7219)
-% cfg_basicio BasicIO - Unknown
+% Job saved on 25-Oct-2018 16:39:17 by cfg_util (rev $Rev: 6460 $)
+% spm SPM - SPM12 (6906)
 %-----------------------------------------------------------------------
 matlabbatch{1}.spm.stats.fmri_est.spmmat = {'/projects/sanlab/shared/CAPS/bids_data/derivatives/fMRI/fx/models/ALERT/wave1/3cond/sub-108p/SPM.mat'};
-matlabbatch{1}.spm.stats.fmri_est.write_residuals = 0;
+matlabbatch{1}.spm.stats.fmri_est.write_residuals = 1;
 matlabbatch{1}.spm.stats.fmri_est.method.Classical = 1;
 matlabbatch{2}.spm.stats.con.spmmat(1) = cfg_dep('Model estimation: SPM.mat File', substruct('.','val', '{}',{1}, '.','val', '{}',{1}, '.','val', '{}',{1}), substruct('.','spmmat'));
 matlabbatch{2}.spm.stats.con.consess{1}.tcon.name = 'ERNeg';
@@ -32,6 +31,6 @@ matlabbatch{2}.spm.stats.con.consess{8}.tcon.name = 'rating';
 matlabbatch{2}.spm.stats.con.consess{8}.tcon.weights = [0 0 0 0 0 0 0 1];
 matlabbatch{2}.spm.stats.con.consess{8}.tcon.sessrep = 'repl';
 matlabbatch{2}.spm.stats.con.consess{9}.tcon.name = 'ERNeg_JLNeg';
-matlabbatch{2}.spm.stats.con.consess{9}.tcon.weights = [1 0 0 0 -1 0];
+matlabbatch{2}.spm.stats.con.consess{9}.tcon.weights = [1 0 0 0 -1 0 0 0];
 matlabbatch{2}.spm.stats.con.consess{9}.tcon.sessrep = 'repl';
 matlabbatch{2}.spm.stats.con.delete = 0;

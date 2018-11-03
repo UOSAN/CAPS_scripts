@@ -21,7 +21,7 @@ STUDY=/projects/sanlab/shared/CAPS/CAPS_scripts
 SUBJLIST=`cat subject_list.txt`
 
 # Which SID should be replaced?
-REPLACESID='001'
+REPLACESID='108p'
 
 #SPM Path
 SPM_PATH=/projects/sanlab/shared/spm12

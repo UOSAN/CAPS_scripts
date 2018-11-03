@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
-sub-219p
+203p
 Running /projects/sanlab/shared/CAPS/CAPS_scripts/fMRI/ppc/smooth/smooth.m
 -------------------------------------------------------------------------------
 
@@ -22,29 +22,18 @@ Done    'File Selector (Batch Mode)'
 Running 'File Selector (Batch Mode)'
 Done    'File Selector (Batch Mode)'
 Running 'Gunzip Files'
-Failed  'Gunzip Files'
-Output argument "out" (and maybe others) not assigned during call to "cfg_run_gunzip_files".
-
+Done    'Gunzip Files'
 Running 'Gunzip Files'
-Failed  'Gunzip Files'
-Output argument "out" (and maybe others) not assigned during call to "cfg_run_gunzip_files".
+Done    'Gunzip Files'
+Running 'Expand image frames'
+Done    'Expand image frames'
+Running 'Expand image frames'
+Done    'Expand image frames'
+Running 'Smooth'
+Done    'Smooth'
+Running 'Smooth'
+Done    'Smooth'
+Running 'Move/Delete Files'
+Done    'Move/Delete Files'
+Done
 
-No executable modules, but still unresolved dependencies or incomplete module inputs.
-The following modules did not run:
-Failed: Gunzip Files
-Failed: Gunzip Files
-Skipped: Expand image frames
-Skipped: Expand image frames
-Skipped: Smooth
-Skipped: Smooth
-Skipped: Move/Delete Files
-
-{Error using MATLABbatch system
-Job execution failed. The full log of this run can be found in MATLAB command
-window, starting with the lines (look for the line showing the exact #job as
-displayed in this error message)
-------------------
-Running job #1
-------------------
-} 
->> 

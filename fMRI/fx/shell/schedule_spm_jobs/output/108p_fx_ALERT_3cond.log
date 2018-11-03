@@ -1,0 +1,42 @@
+-------------------------------------------------------------------------------
+108p
+Running /projects/sanlab/shared/CAPS/CAPS_scripts/fMRI/fx/models/ALERT/fx_3cond.m
+-------------------------------------------------------------------------------
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017b (9.3.0.713579) 64-bit (glnxa64)
+                             September 14, 2017
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+
+
+------------------------------------------------------------------------
+Running job #1
+------------------------------------------------------------------------
+Running 'fMRI model specification'
+Failed  'fMRI model specification'
+Error using read_hdr (line 32)
+Error reading header file "/projects/sanlab/shared/CAPS/bids_data/derivatives/fmriprep/sub-108p/ses-wave1/func/s6_sub-108p_ses-1_task-ALERT_acq-01_bold_space-MNI152NLin2009cAsym_preproc.nii".
+In file "/projects/sanlab/shared/spm12/@nifti/private/read_hdr.m" (v4967), function "read_hdr" at line 32.
+In file "/projects/sanlab/shared/spm12/@nifti/nifti.m" (v4986), function "nifti" at line 26.
+In file "/projects/sanlab/shared/spm12/spm_select.m" (v6530), function "spm_select_get_nbframes" at line 268.
+In file "/projects/sanlab/shared/spm12/spm_select.m" (v6530), function "spm_select_expand" at line 254.
+In file "/projects/sanlab/shared/spm12/spm_select.m" (v6530), function "spm_select" at line 130.
+In file "/gpfs/projects/sanlab/shared/spm12/config/spm_run_fmri_spec.m" (v6562), function "spm_run_fmri_spec" at line 125.
+
+The following modules did not run:
+Failed: fMRI model specification
+
+{Error using MATLABbatch system
+Job execution failed. The full log of this run can be found in MATLAB command
+window, starting with the lines (look for the line showing the exact #job as
+displayed in this error message)
+------------------
+Running job #1
+------------------
+} 
+>> 
